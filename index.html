@@ -483,7 +483,7 @@ renderCart();
 
 function copyOrder(){
 
-    const company = document.getElementById("company").value;
+    const company = document.getElementById("company").value.trim();
     const employee = document.getElementById("employee").value.trim();
 
     if(company === ""){
@@ -492,7 +492,12 @@ function copyOrder(){
     }
 
     if(employee === ""){
-        alert("Podaj osobę generującą zamówienie!");
+        alert("Podaj osobę zamawiającą!");
+        return;
+    }
+
+    if(Object.keys(cart).length === 0){
+        alert("Dodaj przynajmniej jeden produkt do zamówienia!");
         return;
     }
 
