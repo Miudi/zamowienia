@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Generator ZamÃ³wieÅ„</title>
+<title>Generator Zamówień</title>
 
 <style>
 *{
@@ -51,7 +51,6 @@ h1{
     position:sticky;
     top:20px;
 }
-
 
 .left,.right,.middle{
     background:#1b1b1b;
@@ -252,7 +251,7 @@ input[type=text]{
 
 <img src="logo_firmy.png" class="logo" alt="Logo firmy">
 
-<h1>ðŸ›’ Generator ZamÃ³wieÅ„</h1>
+<h1>🛒 Generator Zamówień</h1>
 
 <div class="wrapper">
 
@@ -269,31 +268,28 @@ input[type=text]{
     <option>The Town</option>
     <option>Yellow Jack</option>
     <option>The Paddock</option>
-    <option>Jose CafÃ©</option>
-	<option>77 Club</option>
+    <option>Jose Café</option>
+    <option>77 Club</option>
 </select>
 
 <label for="employee" style="display:block;margin-bottom:8px;">
-    Osoba ZamawiajÄ…ca:
+    Osoba Zamawiająca:
 </label>
 
 <input
     type="text"
     id="employee"
     class="companySelect"
-    placeholder="Wpisz imiÄ™ i nazwisko">
+    placeholder="Wpisz imię i nazwisko">
 
 <br><br>
 
 </div>
 
-
-
-
 <div class="middle">
 
 <div class="searchBox">
-    <span class="searchIcon"></span>
+    <span class="searchIcon">🔍</span>
     <input id="search" type="text" placeholder="Wyszukaj produkt...">
 </div>
 
@@ -303,7 +299,7 @@ input[type=text]{
 
 <div class="right">
 
-<h2 style="text-align:center">ZamÃ³wienie</h2>
+<h2 style="text-align:center">Zamówienie</h2>
 
 <div id="cart"></div>
 
@@ -312,12 +308,11 @@ Razem: $<span id="sum">0</span>
 </div>
 
 <div class="actions">
-<button class="copy" onclick="copyOrder()">ðŸ“‹ Kopiuj</button>
-<button class="clear" onclick="clearCart()">ðŸ—‘ WyczyÅ›Ä‡</button>
+<button class="copy" onclick="copyOrder()">📋 Kopiuj</button>
+<button class="clear" onclick="clearCart()">🗑️ Wyczyść</button>
 </div>
 
 </div>
-
 
 </div>
 
@@ -327,29 +322,29 @@ Razem: $<span id="sum">0</span>
 
 const products=[
 
-["Sos Barbeque",8],["Sos Serowy",8],["Sos Chilli",8],["Sos Sojowy",8],["Sos Ketchup",8],["Sos Majonez",8],["Musztarda",8],["Sos Salsa",8],["Sos Teriyaki",8],["Sos Pomidorowy",8],["Sos Tzatziki",8],["Sos Åšmietankowy",8],
+["Sos Barbeque",8],["Sos Serowy",8],["Sos Chilli",8],["Sos Sojowy",8],["Sos Ketchup",8],["Sos Majonez",8],["Musztarda",8],["Sos Salsa",8],["Sos Teriyaki",8],["Sos Pomidorowy",8],["Sos Tzatziki",8],["Sos Śmietankowy",8],
 
 ["E-cola",6],["Woda gazowana",6],["Woda niegazowana",6],["Energetyk junk",6],["Orange-O-Tang",6],["Puszka sprunk",6],["Tonic",6],["Paczka ziaren kawy",15],["Kostki lodu",6],
 
-["DÅ¼em jabÅ‚kowy",6],["DÅ¼em winogronowy",6],
+["Dżem jabłkowy",6],["Dżem winogronowy",6],
 
-["ZioÅ‚a",11],["Przyprawy",6],["Tabasco",7],
+["Zioła",11],["Przyprawy",6],["Tabasco",7],
 
-["Ciastko",8],["Sos Owocowy",8],["Sos Czekoladowy",8],["Syrop owocowy",6],["MiÃ³d",8],["Cukier",5],
+["Ciastko",8],["Sos Owocowy",8],["Sos Czekoladowy",8],["Syrop owocowy",6],["Miód",8],["Cukier",5],
 
-["Pieczywo",8],["MÄ…ka",6],["Panierka",6],["Tortilla",7],["Makaron",5],
+["Pieczywo",8],["Mąka",6],["Panierka",6],["Tortilla",7],["Makaron",5],
 
-["Rak amerykaÅ„ski",15],["MaÅ‚Å¼a",9],["Owoce morza",11],["Krewetka",10],
+["Rak amerykański",15],["Małża",9],["Owoce morza",11],["Krewetka",10],
 
-["Nori do sushi",5],["RyÅ¼",5],
+["Nori do sushi",5],["Ryż",5],
 
-["Banan",12],["BorÃ³wka",12],["Cytryna",12],["Dziki agrest",12],["JabÅ‚ko",12],["Jagoda amerykaÅ„ska",12],["JeÅ¼yna",12],["KiÅ›Ä‡ winogron",12],["Limonka",12],["Malina",12],["PomaraÅ„cze",12],["Poziomka",12],["Cytrusy",18],["Owoce",18],
+["Banan",12],["Borówka",12],["Cytryna",12],["Dziki agrest",12],["Jabłko",12],["Jagoda amerykańska",12],["Jeżyna",12],["Kiść winogron",12],["Limonka",12],["Malina",12],["Pomarańcze",12],["Poziomka",12],["Cytrusy",18],["Owoce",18],
 
-["Baranina",20],["MiÄ™so z indyka",20],["WoÅ‚owina",26],["KieÅ‚basa",20],["Wieprzowina",26],["MiÄ™so z kaczki",20],["MiÄ™so z kurczaka",20],["Å»eberka",26],["Karp",38],["Makrela pacyficzna",18],["PstrÄ…g potokowy",18],["Sardynka pacyficzna",18],["ÅšledÅº pacyficzny",18],["ÅosoÅ› krÃ³lewski",32],["Sum pospolity",32],
+["Baranina",20],["Mięso z indyka",20],["Wołowina",26],["Kiełbasa",20],["Wieprzowina",26],["Mięso z kaczki",20],["Mięso z kurczaka",20],["Żeberka",26],["Karp",38],["Makrela pacyficzna",18],["Pstrąg potokowy",18],["Sardynka pacyficzna",18],["Śledź pacyficzny",18],["Łosoś królewski",32],["Sum pospolity",32],
 
-["Cebula",10],["Papryka",10],["Ziemniaki",11],["Bita Å›mietana",13],["Jogurt",13],["Mleko",11],["MasÅ‚o",12],["Åšmietana",10],["Boczniak ostrygowaty",11],["Borowik krÃ³lewski",11],["Kurka zÅ‚ocista",11],["MaÅ›lak",11],["OpieÅ„ka miodowa",11],["Rydz amerykaÅ„ski",11],["Smardz leÅ›ny",11],["Jajko",10],["Warzywa",15],["MiÄ™ta",10],
+["Cebula",10],["Papryka",10],["Ziemniaki",11],["Bita śmietana",13],["Jogurt",13],["Mleko",11],["Masło",12],["Śmietana",10],["Boczniak ostrygowaty",11],["Borowik królewski",11],["Kurka złocista",11],["Maślak",11],["Opieńka miodowa",11],["Rydz amerykański",11],["Smardz leśny",11],["Jajko",10],["Warzywa",15],["Mięta",10],
 
-["Paczka liÅ›ci herbaty",15],
+["Paczka liści herbaty",15],
 
 ["Olej",7],["Orzeszki ziemne",7],["Zupa",8]
 
@@ -428,7 +423,7 @@ cartDiv.innerHTML+=`
 <button onclick="changeQty('${name}',1)">+</button>
 </div>
 
-<button class="remove" onclick="removeItem('${name}')">ðŸ—‘</button>
+<button class="remove" onclick="removeItem('${name}')">🗑️</button>
 
 </div>
 
@@ -492,32 +487,30 @@ function copyOrder(){
     const employee = document.getElementById("employee").value.trim();
 
     if(company === ""){
-        alert("Wybierz firm?!");
+        alert("Wybierz firmę!");
         return;
     }
 
     if(employee === ""){
-        alert("Podaj osob? generuj?c? zam¨®wienie!");
+        alert("Podaj osobę generującą zamówienie!");
         return;
     }
 
-
     let txt = "```\n";
 
-	txt += `Firma: ${company}\n`;
-	txt += `Osoba: ${employee}\n`;
-	txt += `Typ produktu\n`;
+    txt += `Firma: ${company}\n`;
+    txt += `Osoba: ${employee}\n`;
+    txt += `Typ produktu\n`;
 
-	for(let name in cart){
-		txt += `${name} ${cart[name].qty}\n`;
-	}
+    for(let name in cart){
+        txt += `${name} ${cart[name].qty}\n`;
+    }
 
-	txt += "```";
-
+    txt += "```";
 
     navigator.clipboard.writeText(txt);
 
-    alert("Skopiowano list? produkt¨®w!");
+    alert("Skopiowano listę produktów!");
 }
 
 document.getElementById("search").addEventListener("input",e=>renderProducts(e.target.value));
