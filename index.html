@@ -265,13 +265,15 @@ input[type=text]{
 
 <select id="company" class="companySelect">
     <option value=""></option>
-    <option>The Town</option>
-    <option>Yellow Jack</option>
-    <option>The Paddock</option>
-    <option>Jose Café</option>
-    <option>77 Club</option>
+    <option value="The Town">The Town</option>
+    <option value="Yellow Jack">Yellow Jack</option>
+    <option value="The Paddock">The Paddock</option>
+    <option value="Jose Café">Jose Café</option>
+    <option value="77 Club">7 Club</option>
 </select>
 
+
+	
 <label for="employee" style="display:block;margin-bottom:8px;">
     Osoba Zamawiająca:
 </label>
@@ -283,6 +285,39 @@ input[type=text]{
     placeholder="Wpisz imię i nazwisko">
 
 <br><br>
+
+<script>
+	const company = document.getElementById("company");
+	const employee = document.getElementById("employee");
+	
+	// Wczytaj zapisaną firmę
+	const savedCompany = localStorage.getItem("company");
+	if (savedCompany) {
+	    company.value = savedCompany;
+	}
+	
+	// Wczytaj zapisaną osobę
+	const savedEmployee = localStorage.getItem("employee");
+	if (savedEmployee) {
+	    employee.value = savedEmployee;
+	}
+	
+	// Zapisuj po zmianie firmy
+	company.addEventListener("change", () => {
+	    localStorage.setItem("company", company.value);
+	});
+	
+	// Zapisuj podczas wpisywania osoby
+	employee.addEventListener("input", () => {
+	    localStorage.setItem("employee", employee.value);
+	});
+</script>
+
+// Zapisuj po zmianie
+company.addEventListener("change", () => {
+    localStorage.setItem("company", company.value);
+});
+</script>
 
 </div>
 
