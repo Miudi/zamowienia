@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Generator ZamÃ³wieÅ„</title>
+<title>Generator Zamówień</title>
 
 <style>
 *{
@@ -18,6 +18,13 @@ body{
     color:orange;
 }
 
+.logo{
+    display:block;
+    margin:0 auto 20px auto;
+    max-width:250px;
+    height:auto;
+}
+	
 .container{
     width:95%;
     max-width:70%;
@@ -44,7 +51,6 @@ h1{
     position:sticky;
     top:20px;
 }
-
 
 .left,.right,.middle{
     background:#1b1b1b;
@@ -243,7 +249,9 @@ input[type=text]{
 
 <div class="container">
 
-<h1>ðŸ›’ Generator ZamÃ³wieÅ„</h1>
+<img src="logo_firmy.png" class="logo" alt="Logo firmy">
+
+<h1>🛒 Generator Zamówień</h1>
 
 <div class="wrapper">
 
@@ -257,36 +265,67 @@ input[type=text]{
 
 <select id="company" class="companySelect">
     <option value=""></option>
-    <option>The Town</option>
-    <option>Yellow Jack</option>
-    <option>The Paddock</option>
-    <option>Jose CafÃ©</option>
-	<option>77 Club</option>
-	<option>Bahama Mamas</option>
-	<option>Kebab King</option>
+    <option value="The Town">The Town</option>
+    <option value="Yellow Jack">Yellow Jack</option>
+    <option value="The Paddock">The Paddock</option>
+    <option value="Jose Café">Jose Café</option>
+    <option value="77 Club">77 Club</option>
+	<option value="Bahama Mamas">Bahama Mamas</option>
+	<option value="Kebab King">Kebab King</option>
 </select>
 
+
+	
 <label for="employee" style="display:block;margin-bottom:8px;">
-    Osoba ZamawiajÄ…ca:
+    Osoba Zamawiająca:
 </label>
 
 <input
     type="text"
     id="employee"
     class="companySelect"
-    placeholder="Wpisz imiÄ™ i nazwisko">
+    placeholder="Wpisz imię i nazwisko">
 
 <br><br>
 
+<script>
+	const company = document.getElementById("company");
+	const employee = document.getElementById("employee");
+	
+	// Wczytaj zapisaną firmę
+	const savedCompany = localStorage.getItem("company");
+	if (savedCompany) {
+	    company.value = savedCompany;
+	}
+	
+	// Wczytaj zapisaną osobę
+	const savedEmployee = localStorage.getItem("employee");
+	if (savedEmployee) {
+	    employee.value = savedEmployee;
+	}
+	
+	// Zapisuj po zmianie firmy
+	company.addEventListener("change", () => {
+	    localStorage.setItem("company", company.value);
+	});
+	
+	// Zapisuj podczas wpisywania osoby
+	employee.addEventListener("input", () => {
+	    localStorage.setItem("employee", employee.value);
+	});
+
+	// Zapisuj po zmianie
+	company.addEventListener("change", () => {
+	    localStorage.setItem("company", company.value);
+	});
+</script>
+
 </div>
-
-
-
 
 <div class="middle">
 
 <div class="searchBox">
-    <span class="searchIcon"></span>
+    <span class="searchIcon">🔍</span>
     <input id="search" type="text" placeholder="Wyszukaj produkt...">
 </div>
 
@@ -296,7 +335,7 @@ input[type=text]{
 
 <div class="right">
 
-<h2 style="text-align:center">ZamÃ³wienie</h2>
+<h2 style="text-align:center">Zamówienie</h2>
 
 <div id="cart"></div>
 
@@ -305,12 +344,11 @@ Razem: $<span id="sum">0</span>
 </div>
 
 <div class="actions">
-<button class="copy" onclick="copyOrder()">ðŸ“‹ Kopiuj</button>
-<button class="clear" onclick="clearCart()">ðŸ—‘ WyczyÅ›Ä‡</button>
+<button class="copy" onclick="copyOrder()">📋 Kopiuj</button>
+<button class="clear" onclick="clearCart()">🗑️ Wyczyść</button>
 </div>
 
 </div>
-
 
 </div>
 
@@ -318,33 +356,115 @@ Razem: $<span id="sum">0</span>
 
 <script>
 
-const products=[
+const products = [
 
-["Sos Barbeque",8],["Sos Serowy",8],["Sos Chilli",8],["Sos Sojowy",8],["Sos Ketchup",8],["Sos Majonez",8],["Musztarda",8],["Sos Salsa",8],["Sos Teriyaki",8],["Sos Pomidorowy",8],["Sos Tzatziki",8],["Sos Åšmietankowy",8],
+["Ryż",5],
+["Przyprawy",6],
+["Kiełbasa",20],
+["Sos barbeque",8],
+["Kostki lodu",6],
+["Cytryna",12],
+["Mięta",10],
+["Energetyk junk",6],
+["Cukier",5],
+["Mąka",6],
+["Dżem jabłkowy",6],
+["Woda niegazowana",6],
+["Panierka",6],
+["Paczka ziaren kawy",15],
+["Olej",7],
+["Orzeszki ziemne",7],
+["Zupa",8],
+["Sos serowy",8],
+["Sos chili",8],
+["Sos czekoladowy",8],
+["Sos śmietankowy",8],
+["Sos sojowy",8],
+["Sos owocowy",8],
+["Sos czosnkowy",8],
+["Ketchup",8],
+["Majonez",8],
+["Musztarda",8],
+["Sos salsa",8],
+["Sos teriyaki",8],
+["Sos pomidorowy",8],
+["Sos tzatziki",8],
 
-["E-cola",6],["Woda gazowana",6],["Woda niegazowana",6],["Energetyk junk",6],["Orange-O-Tang",6],["Puszka sprunk",6],["Tonic",6],["Paczka ziaren kawy",15],["Kostki lodu",6],
+["E-cola",6],
+["Woda gazowana",6],
+["Syrop owocowy",6],
+["Orange-O-Tang",6],
+["Puszka sprunk",6],
+["Tonic",6],
 
-["DÅ¼em jabÅ‚kowy",6],["DÅ¼em winogronowy",6],
+["Zioła",11],
+["Tabasco",7],
 
-["ZioÅ‚a",11],["Przyprawy",6],["Tabasco",7],
+["Pieczywo",8],
+["Ciastko",8],
+["Miód",8],
+["Nori do sushi",5],
+["Makaron",5],
+["Tortilla",7],
 
-["Ciastko",8],["Sos Owocowy",8],["Sos Czekoladowy",8],["Syrop owocowy",6],["MiÃ³d",8],["Cukier",5],
+["Rak amerykański",15],
+["Małża",9],
+["Owoce morza",11],
+["Krewetka",10],
 
-["Pieczywo",8],["MÄ…ka",6],["Panierka",6],["Tortilla",7],["Makaron",5],
+["Dżem winogronowy",6],
 
-["Rak amerykaÅ„ski",15],["MaÅ‚Å¼a",9],["Owoce morza",11],["Krewetka",10],
+["Banan",12],
+["Borówka",12],
+["Dziki agrest",12],
+["Jabłko",12],
+["Jagoda amerykańska",12],
+["Jeżyna",12],
+["Kiść winogron",12],
+["Limonka",12],
+["Malina",12],
+["Pomarańcze",12],
+["Poziomka",12],
+["Cytrusy",18],
+["Owoce",18],
 
-["Nori do sushi",5],["RyÅ¼",5],
+["Baranina",20],
+["Mięso z indyka",20],
+["Wołowina",26],
+["Wieprzowina",26],
+["Mięso z kaczki",20],
+["Mięso z kurczaka",20],
+["Żeberka",26],
 
-["Banan",12],["BorÃ³wka",12],["Cytryna",12],["Dziki agrest",12],["JabÅ‚ko",12],["Jagoda amerykaÅ„ska",12],["JeÅ¼yna",12],["KiÅ›Ä‡ winogron",12],["Limonka",12],["Malina",12],["PomaraÅ„cze",12],["Poziomka",12],["Cytrusy",18],["Owoce",18],
+["Karp",38],
+["Makrela pacyficzna",18],
+["Pstrąg potokowy",18],
+["Sardynka pacyficzna",18],
+["Śledź pacyficzny",18],
+["Łosoś królewski",32],
+["Sum pospolity",32],
 
-["Baranina",20],["MiÄ™so z indyka",20],["WoÅ‚owina",26],["KieÅ‚basa",20],["Wieprzowina",26],["MiÄ™so z kaczki",20],["MiÄ™so z kurczaka",20],["Å»eberka",26],["Karp",38],["Makrela pacyficzna",18],["PstrÄ…g potokowy",18],["Sardynka pacyficzna",18],["ÅšledÅº pacyficzny",18],["ÅosoÅ› krÃ³lewski",32],["Sum pospolity",32],
+["Cebula",10],
+["Papryka",10],
+["Ziemniaki",11],
+["Bita śmietana",13],
+["Jogurt",13],
+["Mleko",11],
+["Masło",12],
+["Śmietana",10],
 
-["Cebula",10],["Papryka",10],["Ziemniaki",11],["Bita Å›mietana",13],["Jogurt",13],["Mleko",11],["MasÅ‚o",12],["Åšmietana",10],["Boczniak ostrygowaty",11],["Borowik krÃ³lewski",11],["Kurka zÅ‚ocista",11],["MaÅ›lak",11],["OpieÅ„ka miodowa",11],["Rydz amerykaÅ„ski",11],["Smardz leÅ›ny",11],["Jajko",10],["Warzywa",15],["MiÄ™ta",10],
+["Boczniak ostrygowaty",11],
+["Borowik królewski",11],
+["Kurka złocista",11],
+["Maślak",11],
+["Opieńka miodowa",11],
+["Rydz amerykański",11],
+["Smardz leśny",11],
 
-["Paczka liÅ›ci herbaty",15],
+["Jajko",10],
+["Warzywa",15],
 
-["Olej",7],["Orzeszki ziemne",7],["Zupa",8]
+["Paczka liści herbaty",15]
 
 ];
 
@@ -421,7 +541,7 @@ cartDiv.innerHTML+=`
 <button onclick="changeQty('${name}',1)">+</button>
 </div>
 
-<button class="remove" onclick="removeItem('${name}')">ðŸ—‘</button>
+<button class="remove" onclick="removeItem('${name}')">🗑️</button>
 
 </div>
 
@@ -481,36 +601,39 @@ renderCart();
 
 function copyOrder(){
 
-    const company = document.getElementById("company").value;
+    const company = document.getElementById("company").value.trim();
     const employee = document.getElementById("employee").value.trim();
 
     if(company === ""){
-        alert("Wybierz firm?!");
+        alert("Wybierz firmę!");
         return;
     }
 
     if(employee === ""){
-        alert("Podaj osob? generuj?c? zam¨®wienie!");
+        alert("Podaj osobę zamawiającą!");
         return;
     }
 
+    if(Object.keys(cart).length === 0){
+        alert("Dodaj przynajmniej jeden produkt do zamówienia!");
+        return;
+    }
 
     let txt = "```\n";
 
-	txt += `Firma: ${company}\n`;
-	txt += `Osoba: ${employee}\n`;
-	txt += `Typ produktu\n`;
+    txt += `Firma: ${company}\n`;
+    txt += `Osoba: ${employee}\n`;
+    txt += `Typ produktu\n`;
 
-	for(let name in cart){
-		txt += `${name} ${cart[name].qty}\n`;
-	}
+    for(let name in cart){
+        txt += `${name} ${cart[name].qty}\n`;
+    }
 
-	txt += "```";
-
+    txt += "```";
 
     navigator.clipboard.writeText(txt);
 
-    alert("Skopiowano list? produkt¨®w!");
+    alert("Skopiowano listę produktów!");
 }
 
 document.getElementById("search").addEventListener("input",e=>renderProducts(e.target.value));
